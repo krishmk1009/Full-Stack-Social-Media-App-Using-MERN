@@ -1,44 +1,29 @@
-import React, { useEffect, useState } from 'react'
-import { Container, AppBar, Typography, Grow, Grid } from "@material-ui/core"
-import Posts from './component/Posts/Posts'
-import Form from './component/Form/Form'
-import useStyles from "./styles"
-// import memories from "./images/memories"
-import { useDispatch } from 'react-redux'
-import { getPosts } from './actions/posts'
+import React from 'react'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import Home from './component/Home/Home'
+import Auth from './component/auth/Auth'
+import Navbar from './component/Navbar/Navbar'
+import { Container } from '@material-ui/core'
+
+// import { Router } from 'react-router-dom/cjs/react-router-dom.min'
 const App = () => {
-  const classes = useStyles();
-  const [currentId, setCurrentId] = useState(null)
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-
-    dispatch(getPosts())
-
-  }, [currentId,dispatch])
 
   return (
-    <Container maxWidth="lg">
-      <AppBar className={classes.appBar} position='static' color='inherit'>
+    <>
 
-        <Typography className={classes.heading} variant='h2' align='center'>memories</Typography>
-      </AppBar>
+      <Container maxWidth="lg">
+        <BrowserRouter>
+          <Navbar />
 
-      <Grow in>
-        <Container>
-          <Grid container justify='space-between' alignItems='stretch' spacing={3}>
-            <Grid item xs={12} sm={7}>
-              <Posts  setCurrentId={setCurrentId} />
-            </Grid>
-            <Grid item xs={12} sm={4}>
-              <Form currentId={currentId}  />
-            </Grid>
+          <Routes>
+            <Route path='/' exact Component={Home} />
+            <Route path='/auth' Component={Auth} />
+          </Routes>
+        </BrowserRouter>
 
-          </Grid>
-        </Container>
-      </Grow>
+      </Container>
+    </>
 
-    </Container>
   )
 }
 
